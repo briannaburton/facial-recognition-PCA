@@ -28,7 +28,8 @@ A = av_F \ fiP; %Find transformation matrix
 %Once the transformation A is found, apply it on every face image
 new_av_F = zeros([5,3]);
 for i=1:length(files)
-    f1 = importdata(cat(2,dname,'/',files(1).name));
+    cfile = files(i).name;
+    f1 = importdata(cat(2,dname,'/',cfile));
     f1 = cat(2, f1, ones(size (f1, 1), 1));
     fiP = f1 * A;
     new_av_F = new_av_F + fiP;
@@ -39,8 +40,10 @@ iterations = 0;
 
 %In the loop, determine new_av_F and compare it to the previous av_F. Stop
 %if less than a threshold.
+stop_cond = (0.01 * ones([5,2]));
+stop_cond = cat(2, stop_cond, zeros(size (stop_cond, 1), 1));
 
-while ((abs(av_F-new_av_F)) > (0.01 * ones([5,3]))):
+while (abs(av_F-new_av_F) >= stop_cond)
     av_F = new_av_F;
     fiP = [13, 20, 1; 50, 20, 1; 34, 34, 1; 16, 50, 1; 48, 50, 1]; %predetermined location
     A = av_F \ fiP; %Find transformation matrix
@@ -48,11 +51,12 @@ while ((abs(av_F-new_av_F)) > (0.01 * ones([5,3]))):
     %Apply A to every image and find the mean transformation
     new_av_F = zeros([5,3]);
     for i=1:length(files)
-        f1 = importdata(cat(2,dname,'/',files(1).name));
+        cfile = files(i).name;
+        f1 = importdata(cat(2,dname,'/',cfile));
         f1 = cat(2, f1, ones(size (f1, 1), 1));
         fiP = f1 * A;
         new_av_F = new_av_F + fiP;
     end
     new_av_F = new_av_F/(length(files))
-    iterations = iterations + 1;
+    iterations = iterations + 1
 end
