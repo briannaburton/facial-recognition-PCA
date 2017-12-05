@@ -2,7 +2,7 @@
 
 Repository for implementing project from Applied maths
 
-# Copying of repository
+# Copy of repository
 ```
 git clone https://github.com/briannaburton1/facial-recognition-PCA.git
 ```
