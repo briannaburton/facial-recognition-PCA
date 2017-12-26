@@ -29,7 +29,7 @@ function [feature_matrix, proj_matrix, labels, train_imgs] = train(train_imgs_fo
         end
     end
 
-    D_m = D - mean(mean(D));
+    D_m = bsxfun(@minus, D, mean(D));
     [p, d] = size(D_m);
     sigm = (1.0/(p - 1)) * D_m * (D_m');
     [eig_vects, eig_vals] = eig(sigm);

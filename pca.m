@@ -4,6 +4,7 @@ train_imgs_folder = './train_images/';
 test_imgs_folder = './test_images/';
 %number of eigenvectors to keep
 n_pca = 50;
+name_regex = '^normalized_(?<name>[A-za-z\s]*)[_\d]*.jpg$';
 
 [feature_matrix, proj_matrix, labels, ~] = train(train_imgs_folder, n_pca);
 
